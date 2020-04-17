@@ -6,6 +6,10 @@ HOME_AWAY_URL = "https://stats.espncricinfo.com/ci/engine/team/2.html?class=1;fi
 HOME_URL = "https://stats.espncricinfo.com/ci/engine/team/2.html?class=1;filter=advanced;home_or_away=1;orderby=start;spanmax1=31+Dec+2019;spanmin1=01+Jan+1990;spanval1=span;template=results;type=team;view=results"
 AWAY_URL = "https://stats.espncricinfo.com/ci/engine/team/2.html?class=1;filter=advanced;home_or_away=2;home_or_away=3;orderby=start;spanmax1=31+Dec+2019;spanmin1=01+Jan+1990;spanval1=span;template=results;type=team;view=results"
 
+'''
+    Saving, parsing and loading data.
+'''
+
 def get_html_data(data_url : str) -> str:
     data_request = requests.get(data_url)
     data_html = data_request.text
@@ -63,6 +67,28 @@ def load_data():
     away_data = pd.read_csv("data/australia-test-summary-1990-2020-away.csv", parse_dates=True)
 
     return (all_data, home_data, away_data)
+
+'''
+    Complex data transformations into better formats
+'''
+
+def get_rolling_win_percentage(years : int, data : pd.DataFrame) -> pd.DataFrame:
+    rolling_data = (pd.get_dummies(data[["Start Date", "Result"]])
+            .rolling(str(years * 365) + "D", on="Start Date").sum())
+    rolling_data[["Result_won", "Result_lost", "Result_draw"]] = (
+            rolling_data[["Result_won", "Result_lost", "Result_draw"]]
+            .div(rolling_data[["Result_won", "Result_lost", "Result_draw"]]
+            .sum(axis=1), axis=0))
+    
+    rolling_data = rolling_data.rename(
+            columns={"Result_won": "Win", "Result_lost": "Loss", 
+            "Result_draw": "Draw", "Start Date": "Time"})
+
+    cutoff = [1990 + i for i in range(years)]
+    rolling_data = rolling_data[~rolling_data["Time"].dt.year.isin(cutoff)]
+
+    rolling_data = rolling_data.set_index("Time")
+    return rolling_data
 
 def debug():
     save_data()
