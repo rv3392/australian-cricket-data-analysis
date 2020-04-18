@@ -23,22 +23,35 @@ def parse_html_data(data_html : str) -> pd.DataFrame:
 
     data : pd.DataFrame = pd.read_html(win_loss_table, index_col=7)[0]
     data = data.rename(columns={"Unnamed: 8": "Global Test ID"})
-    data["Scorecard Link"] = _get_links(win_loss_table)
+    data["Scorecard Link"] = _get_scorecard_links(win_loss_table)
+    data["Ground Link"] = _get_ground_links(win_loss_table)
     data = data.drop(columns="Unnamed: 4")
 
     return data
 
-def _get_links(table_html):
+def _get_scorecard_links(table_html):
     table = bs4.BeautifulSoup(table_html, "html.parser")
-    scoresheet_links = []
+    scorecard_links = []
 
     for row in table.tbody.find_all("tr"):
         cells = row.find_all("td")
         scoresheet_link = cells[8].find("a")["href"]
 
-        scoresheet_links.append(scoresheet_link)
+        scorecard_links.append(scoresheet_link)
         
-    return scoresheet_links
+    return scorecard_links
+
+def _get_ground_links(table_html):
+    table = bs4.BeautifulSoup(table_html, "html.parser")
+    ground_links = []
+
+    for row in table.tbody.find_all("tr"):
+        cells = row.find_all("td")
+        ground_link = cells[6].find("a")["href"]
+
+        ground_links.append(ground_link)
+        
+    return ground_links
 
 def save_data():
     data_html = get_html_data(HOME_AWAY_URL)
