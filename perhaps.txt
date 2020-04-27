@@ -1,0 +1,6 @@
+factors for importance
+runs
+balls
+runs per innings
+batting position
+years
