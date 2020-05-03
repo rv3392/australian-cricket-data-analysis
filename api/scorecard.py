@@ -50,7 +50,7 @@ class Match:
             os.makedirs("matches/match-" + str(self._id))
         for inning_num, inning in enumerate(self._innings):
             inning.save(match_id=self._id, innings_num=inning_num,
-                    dates=self.dates, country=self._country_innings[inning_num])
+                    dates=self.dates, countries=self._country_innings)
 
     def __str__(self):
         return ("Scorecard(Innings:" + 

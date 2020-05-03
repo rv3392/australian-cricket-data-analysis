@@ -15,13 +15,13 @@ class Innings:
         return ("Inning(Batsmen:" + str([str(batsman) for batsman in self._batsmen]) +
                 ",Bowlers:" + str([str(bowler) for bowler in self._bowlers]) + ")")
 
-    def save(self, match_id, innings_num, dates, country):
+    def save(self, match_id, innings_num, dates, countries):
         batting = pd.DataFrame(columns=["Country", "Date", "Name", "Runs", "Balls", "Batsman Profile"])
         bowling = pd.DataFrame(columns=["Country", "Date", "Name", "Overs", "Maidens", "Runs", "Wickets", "Bowler Profile"])
         dates = dates.strip(" ")
         for batsman in self._batsmen:
             row = batsman.get_as_dataframe_row()
-            row["Country"] = country
+            row["Country"] = countries[innings_num]
             row["Date"] = dates
             batting = batting.append(row, ignore_index=True)
 
