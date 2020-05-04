@@ -1,6 +1,8 @@
 import requests
 import pandas as pd
 import bs4
+import datetime
+import dateutil
 
 HOME_AWAY_URL = "https://stats.espncricinfo.com/ci/engine/team/2.html?class=1;filter=advanced;orderby=start;spanmax2=31+Dec+2019;spanmin2=01+Jan+1990;spanval2=span;template=results;type=team;view=results"
 HOME_URL = "https://stats.espncricinfo.com/ci/engine/team/2.html?class=1;filter=advanced;home_or_away=1;orderby=start;spanmax1=31+Dec+2019;spanmin1=01+Jan+1990;spanval1=span;template=results;type=team;view=results"
@@ -86,6 +88,7 @@ def load_data():
 '''
 
 def get_rolling_win_percentage(years : int, data : pd.DataFrame) -> pd.DataFrame:
+    new_data = data[["Start Date", "Result"]]
     rolling_data = (pd.get_dummies(data[["Start Date", "Result"]])
             .rolling(str(years * 365) + "D", on="Start Date").sum())
     rolling_data[["Result_won", "Result_lost", "Result_draw"]] = (
@@ -96,6 +99,45 @@ def get_rolling_win_percentage(years : int, data : pd.DataFrame) -> pd.DataFrame
     rolling_data = rolling_data.rename(
             columns={"Result_won": "Win", "Result_lost": "Loss", 
             "Result_draw": "Draw", "Start Date": "Time"})
+
+    cutoff = [1990 + i for i in range(years)]
+    rolling_data = rolling_data[~rolling_data["Time"].dt.year.isin(cutoff)]
+
+    rolling_data = rolling_data.set_index("Time")
+    return rolling_data
+
+def new_get_rolling_win_percentage(years : int, data : pd.DataFrame) -> pd.DataFrame:
+    new_data = dict()
+
+    new_data["date"] = dict()
+    new_data["won"] = dict()
+    new_data["lost"] = dict()
+    new_data["draw"] = dict()
+
+    start_date = datetime.datetime(day=1, month=1, year=1990)
+    for month in range(360):
+        new_data["date"][month] = start_date + dateutil.relativedelta.relativedelta(months=month)
+        new_data["won"][month] = 0
+        new_data["lost"][month] = 0
+        new_data["draw"][month] = 0
+
+    for row in data[["Start Date", "Result"]].iterrows():
+        i = (row[1]["Start Date"].year - 1990) * 12 + row[1]["Start Date"].month - 1
+        if row[1]["Result"] == "won":
+            new_data["won"][i] += 1
+        if row[1]["Result"] == "lost":
+            new_data["lost"][i] += 1
+        if row[1]["Result"] == "draw":
+            new_data["draw"][i] += 1
+    new_data = pd.DataFrame.from_dict(new_data)
+
+    rolling_data = new_data.rolling(str(years * 365) + "D", on="date").sum()
+    rolling_data[["won", "lost", "draw"]] = (rolling_data[["won", "lost", "draw"]].div(rolling_data[["won", "lost", "draw"]].sum(axis=1), axis=0))
+    rolling_data = rolling_data.fillna(0)
+
+    rolling_data = rolling_data.rename(columns={"date":"Time", "won":"Win", "lost":"Loss", "draw":"Draw"})
+    
+    print(rolling_data)
 
     cutoff = [1990 + i for i in range(years)]
     rolling_data = rolling_data[~rolling_data["Time"].dt.year.isin(cutoff)]

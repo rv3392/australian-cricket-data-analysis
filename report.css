@@ -1,0 +1,17 @@
+.centred-content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1200px;
+    text-align: justify;
+}
+
+.less-centred-content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1400px;
+    text-align: justify;
+}
+
+p, h1, h2, h3, h4, h5, ol {
+    font-family: Arial, Helvetica, sans-serif;
+}

@@ -1,0 +1,213 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="report.css">
+    </head>
+    <body>
+        <div class="centred-content">
+        <div class="title" style="text-align:center">
+            <h1>The Rise and Fall of Australian Cricket</h1>
+            <h3>A dive into performances from 1990 - 2019 using Visualisations</h3>
+        </div>
+        <br>
+        <h3>Contents</h3>
+        <h3>1.0 Introduction</h3>
+        <h3>2.0 Visualisation</h3>
+        <h4>2.1 Analysing Win Percentages</h4>
+        <h5>2.1.1 Win/Draw/Loss Percentages over Time</h5>
+            <iframe src="./plots/5-year-rolling-win-rate-1995-2019.html" 
+                    scrolling="no" 
+                    style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:400px;width:1000px"></iframe>
+            <p>
+                To begin with a stacked-area chart representing the 5-year rolling
+                win ratio between 1995 and 2019 was produced. This visualisation
+                uses data from 1990 to 2019, however the first 5 years were cut since
+                they did not contain a full 5 years of data.
+            </p>
+            <p>
+                The change of the win ratio over this period is quite interesting.
+                As a whole it can be seen that, at first the win ratio underwent
+                a rapid increase between 1995 and 2003 before reaching a peak.
+                During the 5 years following 2003 (2003 - 2008), ther was a mild
+                decline, but overall the win ratio stayed relatively constant. However,
+                after 2007 there is a rapid increase in the amount of games lost, while
+                the number of games drawn only sees a slight increase. 
+            </p>
+            <p>
+                Taking a look at the visualisation for Home and Away games separately
+                two different trends are seen. For home games, the win/draw/loss percentage
+                is relatively constant, with some decrease in draws and losses seen
+                between 2003 and 2010. The away win/draw/loss percentage is far more
+                interesting. While the initial trend is similar to home games, after 
+                2005 the percentage of draws steadily increases until roughly 2010, 
+                when the percentage of losses begins to increase while draws decrease.
+                All of this results in a massive decrease of win ratio. By the end of 2019,
+                the loss percentage makes up the majority of games.
+                <br/><br/>
+                All of this suggests that the biggest factor behind the decrease in
+                Australia's overall win percentage was overseas performance with
+                home performances playing a very small role overall.
+            </p>
+        <h5>2.1.2 Win/Draw/Loss Percentage by Location and Country</h5>
+
+        <h5>2.1.3 Win/Draw/Loss by Toss Result</h5>
+            <p>
+                One of the main aspects of the results of a test match is anecdotally
+                considered to be the result of the toss (coin toss). The winner of the
+                toss is given the option to either bat first or bowl first. As such,
+                it is important to consider that streaks of "bac luck" where a captain
+                loses many tosses in a row could result in a decrease in performance. 
+            </p>
+            <iframe src="./plots/toss-heatmap-against-selected-oppositions.html" 
+                    scrolling="no" 
+                    style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:500px;width:1200px"></iframe>
+            <p>
+                This visualisation uses the toss result data to analyse home, away 
+                and all toss results individually. A heatmap helps with the ability
+                to spot hotspots that might not be obvious if a bar chart or scatter
+                plot were used. 
+            </p>
+            <p>
+                In this case hotspots can be seen where the toss is won and match result
+                is that of a win and where the toss is lost and the match result is that
+                of a loss. This is especially the case for away games against all
+                oppositions. This suggests that the anecdotal evidence put forward by
+                many cricket fans is indeed accurate and that winning the toss does
+                have a positive influence on the likelihood of winning the game, especially
+                when playing in foreign conditions.
+            </p>
+            <p>
+                Perhaps, then, Australia's decrease in performance in foreign conditions can be attributed
+                to an increase in the number of tosses lost. Plotting the percentage of tosses won/lost
+                over time should show if there is a correlation.
+            </p>
+            <iframe src="./plots/percentage-tosses-won-over-time.html" 
+                    scrolling="no" 
+                    style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:400px;width:1000px"></iframe>
+            <p>
+                It is evident that while 
+            </p>
+        <h4>2.3 Analysing Batting</h4>
+            <p>
+                Another massive aspect of cricket is, surprisingly, the 
+                performance of batsmen. While historically, batsmen have their
+                contribution to the team measured over the course of series or
+                their entire lifetime, for the purposes of this report it is
+                more relavent to investigate a batsman's contribution over 
+                a single year.
+            </p>
+            <p>There are three main aspects of a batsman's statistics:</p>
+                <ol>
+                    <li>Average - Runs per Dismissal</li>
+                    <li>Strike Rate - Runs per 100 Balls Faced</li>
+                    <li>Total Runs</li>
+                </ol>
+            <p>
+                For the purposes of this analysis "Runs per Innings" was used
+                over a batsman's Average as a player who is commonly "Not Out"
+                at the end of the Innings could have a very high Average, while
+                their actual contribution to the team's total runs is not that
+                high.
+                <br/><br/>
+                In order to show these metrics over time the below visualisation
+                was created.
+            </p>
+            <iframe src="./plots/runs-per-innings-all.html" 
+                    scrolling="no" 
+                    style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:1200px;width:1200px"></iframe>
+            <p>
+                This visualisation uses the two axes to represent "Runs per Innings"
+                against "Strike Rate", that is how many runs a batsman scores
+                in a single inning compared to how quickly they score it. The size
+                of each bubble represents the total runs scored by a particular
+                batsman over a single year. The colour of the bubble represents the
+                year it was scored in with a scale used to show the sequence of years.
+                In addition to this, the geometric median (represented by the black crosshair) 
+                was calculated for each year using the Runs per Innings and 
+                Strike Rate for each player and plotted on the scatter plot for each year. 
+                <br/><br/>
+                As a whole, one of the most evident trends in the entire visualisation
+                is the increase of strike rate over time. While purple bubbles and
+                thus earlier bubbles are predominantly found on the left hand side
+                of the visualisation, pink bubbles are found further to the right.
+                The most recent bubbles (orange and yellow) are found scattered
+                throughout suggesting more inconsistency in recent years and
+                perhaps indicating that modern Australian players are far more
+                inconsistent.
+                <br/><br/>
+                To further analyse Australia's batting, the geometric median can
+                be graphed against time. This gives the following:
+            </p>
+            <p>
+                The main trend 
+            </p>
+            </div>
+            <div class="less-centred-content">
+            <table>
+                <tr>
+                    <td><iframe src="./plots/percentage-players-with-more-runs-balls-home.html" 
+                        scrolling="no" 
+                        style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:700px;width:700px"></iframe>
+                    </td>
+                    <td><iframe src="./plots/percentage-players-with-more-runs-balls-away.html" 
+                        scrolling="no" 
+                        style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:700px;width:700px"></iframe>
+                    </td>
+                </tr>
+            </table>
+            </div>
+    <div class="centred-content">
+        <h4>2.4 Analysing Bowling</h4>
+        <p>
+            In order to analyse the bowling performances of the Australian team
+            first, various derived columns were created. This includes columns of 
+            data such as runs, wickets and balls per innings and in total over a 
+            player's career for both home and away conditions. This resulted in 
+            16 columns of data, which would be extremely unwieldy for a unsupervised 
+            learning algorithm such as k-means or gaussian mixture. As such,
+            a Principle Component Analysis was applied to reduce the number of
+            columns within the data while covering close to all of the variance
+            in the data. The results of the PCA can be seen below.
+        </p>
+        <iframe src="./plots/bowling-pca-comparisons.html" 
+        scrolling="no" 
+        style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:800px;width:800px"></iframe>
+        <p>
+            5 components were chosen as this allows for a coverage in variance of
+            around 95%. It is interesting to note that "GD McGrath" and "SK Warne" are located 
+            on the extremities of most of the component against component graphs. 
+            This suggests that they are outliers in terms of bowling performance, 
+            however it is not yet clear (without using prior contextual knowledge) 
+            if this was in a positive or negative sense. Apart from this,
+            the above representation is not very useful as it doesn't
+            represent any sort of tangible metrics, hence the Gaussian Mixture Models
+            clustering algorithm was applied using the Scikit Learn Python module.
+        </p>
+        <p>
+            This clustering gives 10 classes with the composition as below.
+        </p>
+        <iframe src="./plots/gmm-class-composition-bowlers.html" 
+        scrolling="no" 
+        style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:800px;width:800px"></iframe>
+        <p>
+            Plotting the percentage of balls bowled by bowlers of each class over time
+            results in the following.
+        </p>
+        <iframe src="./plots/percentage-balls-bowled-by-gmm-class.html" 
+        scrolling="no" 
+        style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:800px;width:1000px"></iframe>
+        <p>
+            This once again suggests an interesting trend: the percentage of balls bowled 
+            by Class 6 bowlers has decreased over time. There are only 3 bowlers in this
+            class, specifically "GD McGrath", "SK Warne" and "NM Lyon".
+
+            As well as this, it can also be seen that there was a dip in Class 3
+            bowlers between the years of 1998 and 2008, which are surrounded by large
+            peaks on either side.
+
+            Both of these trends should be interesting to explore in more depth
+            by analysing the records of specific players to see how their bowling
+            or lack thereof contributed to the demise of Australian cricket.
+        </p>
+    </div>        
+    </body>
+</html>
