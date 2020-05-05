@@ -9,11 +9,116 @@
             <h3>A dive into performances from 1990 - 2019 using Visualisations</h3>
         </div>
         <br>
-        <h3>Contents</h3>
-        <h3>1.0 Introduction</h3>
-        <h3>2.0 Visualisation</h3>
-        <h4>2.1 Analysing Win Percentages</h4>
-        <h5>2.1.1 Win/Draw/Loss Percentages over Time</h5>
+        <h2>Contents</h3>
+        <h2>1.0 Introduction</h3>
+        <p>
+            The Australian Cricket Team of the early to mid 2000s is regarded by many
+            to be the most dominant team in the history of the game. As a result,
+            it's fall from grace during the latter part of the 2000s and into the 2010s
+            is of great interest to fans around the world.
+            <br/><br/>
+            Many have speculated about the reasons for this rapid downfall, arguing
+            that everything from a lack of quality players in domestic tournaments
+            to changing overseas ground conditions to even 
+        </p>
+        <h3>1.1 Aims</h4>
+        <p>
+            The main aim of this report is to identify if there has been a decrease in performance
+            of the Australian Cricket Team and outline some of the causes of this
+            decrease in performance.
+            <br/><br/>
+            For the purposes of this project, rather than looking at performances in
+            all 3 formats of Cricket (T20Is, ODIs and Tests), only Test matches will
+            be looked at. These are the longest format of the game and while performances
+            in T20Is and ODIs are often sporadic and less dependent on team quality,
+            performances in Test matches are a direct result of the quality of a team.
+            <br/><br/>
+            As well as this, the years that will be analysed in this report are
+            constrained to 1990 - 2019. This is because, starting at 1990 should capture
+            the period before the short period of dominance around the early and mid 2000s
+            and should allow for a baseline with which the post-dominance years can be
+            compared to.
+        </p>
+        <h3>1.2 Data and Software</h4>
+        <h4>1.2.1 Data Sources</h4>
+        <p>
+            The main data source for this report will be the 
+            <a href="https://stats.espncricinfo.com/ci/engine/records/index.html" target="_blank">
+                "Statsguru" database created by ESPNCricinfo.</a>
+            This database is regarded as the most
+            comprehensive cricket database, containing all International
+            and almost all Domestic games since the late 19th Century.
+            <br/><br/>
+            The main data collected from ESPNCricinfo was:
+        </p>
+            <ol>
+                <li>Match summaries from 1990 - 2019</li>
+                <li>Scorecards from 1990 - 2019</li>
+            </ol>
+        <p>
+            The first piece of data is obtained through a query in the Statsguru
+            engine. The query was manually submitted to the engine to retrieve
+            all test matches that Australia played between the years 1990 and 2019.
+            This query was then scraped using the Python parsing library
+            BeautifulSoup4 and the relavent data saved as a CSV file. In order to
+            individually analyse data for home matches, away matches and a combination
+            of both of these, three separate match summaries for each of these were saved.
+            <br/><br/>
+            The second piece of data is obtained by taking the match ID and scorecard
+            link from the match summaries and parsing the HTML of the scorecard page
+            before saving it as a CSV. A scorecard
+            gives a breakdown of the entire game, outlining each player's contribution
+            to the team's run total and their contribution to the bowling. Using this,
+            a summary of each player can be constructed over time, allowing for
+            finer granularity when looking at the career of a player over time
+            or the performances of the team over time.
+            <br/><br/>
+            Data from this source was also scraped using a custom parser using
+            a series of objects that represent matches, innings, bowlers and batsmen
+            with the BeautifulSoup4 package at its core. This script used the collected data of 
+            the first form to access scorecards of matches played by Australia between
+            1990 and 2019, downloading and parsing each before saving 
+            each bowling and batting inning as a CSV file.
+            <br/><br/>
+            As well as ESPNCricinfo, ground locations data was manually sourced
+            by using Google to find the latitude and longitude for each ground.
+            This was done as there does not seem to be any singular database
+            that contains the coordinate positions for cricket grounds around
+            the world. Writing a script to do this would be quite pointless as
+            it would probably take longer especially since there are only 64
+            grounds.
+        </p>
+        <h4>1.2.2 Software</h4>
+        <p>
+            The main software that will be used for creating visualisations is
+            the Plotly package for Python. This specific visualisation software
+            has been chosen as it is highly customisable and fairly simple to use,
+            especially with CSV data files.
+
+            Preprocessing will be done using the Pandas package for Python, which
+            allows for easy transformation of data through the use of Dataframes.
+        </p>
+        <h3>1.3 Definition of Terms</h4>
+        <p>
+            Cricket can be a highly jargon-filled game and as such a glossary
+            of key terms has been included.
+            <br/><br/>
+            <ul>
+                <li>Test Match - A game played between two teams that has 4 Innings, with each team batting twice and bowling twice</li>
+                <li>Inning - A teams turn at batting or bowling</li>
+                <li>Runs - The score scored by the batsmen</li>
+            </ul>
+        </p>
+        <h2>2.0 Visualisation</h3>
+        <p>
+            The analysis of the data can be split up into 3 main sections.
+            The first section analyses overall trends in win percentages over time and
+            comparing to playing location and conditions. Section two analyses the
+            quality of batting over the 30 year window and section three analyses the
+            quality of bowling over this same period.
+        </p>
+        <h3>2.1 Analysing Win Percentages</h4>
+        <h4>2.1.1 Win/Draw/Loss Percentages over Time</h5>
             <iframe src="./plots/5-year-rolling-win-rate-1995-2019.html" 
                     scrolling="no" 
                     style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:400px;width:1000px"></iframe>
@@ -47,14 +152,31 @@
                 Australia's overall win percentage was overseas performance with
                 home performances playing a very small role overall.
             </p>
-        <h5>2.1.2 Win/Draw/Loss Percentage by Location and Country</h5>
-
-        <h5>2.1.3 Win/Draw/Loss by Toss Result</h5>
+        <h4>2.1.2 Win/Draw/Loss Percentage by Location and Country</h4>
+        <iframe src="./plots/win-rate-animation.html" 
+        scrolling="no" 
+        style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:800px;width:1200px"></iframe>
+        <p>
+            This visualisation provides an interesting reinforcement to the trend noted
+            in the previous section. While win and draw percentages consistently
+            stay very high for home matches for the entire period, it's interesting
+            to note that this isn't the case for away matches.
+            <br/><br/>
+            Another interesting point to note is that Australia did not play
+            in South Africa until 1994 and in Bangladesh until 2006. The reprecussions
+            of this isn't exactly clear, but it appears that there was also a reduction
+            in the number of matches player in New Zealand and the West Indies during
+            this period. This coupled with the increase in win and draw percentages in
+            New Zealand and the West Indies suggests that these were weaker away oppositions
+            and as such could have helped with the very high win percentages during
+            the early 2000s.
+        </p>
+        <h4>2.1.3 Win/Draw/Loss by Toss Result</h4>
             <p>
-                One of the main aspects of the results of a test match is anecdotally
+                Another one of the main aspects of the results of a test match is anecdotally
                 considered to be the result of the toss (coin toss). The winner of the
                 toss is given the option to either bat first or bowl first. As such,
-                it is important to consider that streaks of "bac luck" where a captain
+                it is important to consider that streaks of "bad luck" where a captain
                 loses many tosses in a row could result in a decrease in performance. 
             </p>
             <iframe src="./plots/toss-heatmap-against-selected-oppositions.html" 
@@ -78,17 +200,24 @@
             <p>
                 Perhaps, then, Australia's decrease in performance in foreign conditions can be attributed
                 to an increase in the number of tosses lost. Plotting the percentage of tosses won/lost
-                over time should show if there is a correlation.
+                over time was used to identify if there was a correlation.
             </p>
             <iframe src="./plots/percentage-tosses-won-over-time.html" 
                     scrolling="no" 
                     style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:400px;width:1000px"></iframe>
             <p>
-                It is evident that while 
+                It is interesting that over the period in question, the number of
+                tosses won seems to be very high for Away games and very low for
+                Home games. However, while the overall trend for all matches
+                and home matches is well defined, the trend for away matches
+                is far less defined over time. As such, nothing can be
+                conclusively determined from looking at the toss data apart
+                from there being a link between tosses won and matches won and
+                tosses lost and matches lost when played overseas.
             </p>
-        <h4>2.3 Analysing Batting</h4>
+        <h3>2.2 Analysing Batting</h3>
             <p>
-                Another massive aspect of cricket is, surprisingly, the 
+                Another massive aspect of cricket is the 
                 performance of batsmen. While historically, batsmen have their
                 contribution to the team measured over the course of series or
                 their entire lifetime, for the purposes of this report it is
@@ -97,7 +226,7 @@
             </p>
             <p>There are three main aspects of a batsman's statistics:</p>
                 <ol>
-                    <li>Average - Runs per Dismissal</li>
+                    <li>Average - Runs per Dismissal or "Out"</li>
                     <li>Strike Rate - Runs per 100 Balls Faced</li>
                     <li>Total Runs</li>
                 </ol>
@@ -107,6 +236,11 @@
                 at the end of the Innings could have a very high Average, while
                 their actual contribution to the team's total runs is not that
                 high.
+                <br/><br/>
+                As well as this, while it convention argues that strike rate is
+                not important when talking about test matches, the rate of scoring
+                plays an important role in the amount of runs possibly scored and
+                reveals the intent of the batsman's batting.
                 <br/><br/>
                 In order to show these metrics over time the below visualisation
                 was created.
@@ -134,11 +268,59 @@
                 perhaps indicating that modern Australian players are far more
                 inconsistent.
                 <br/><br/>
+                Another trend that is present from visual inspection, is the occurrence
+                of high run, high runs per innings and high strike rate years for players
+                around the early 2000s. This is seen in the dominance of light pink
+                and light purple bubbles around the top right quadrant.
+                <br/><br/>
                 To further analyse Australia's batting, the geometric median can
-                be graphed against time. This gives the following:
+                be graphed against time. This gives the following animated graphs
+                which can be played by pressing the "play" button:
             </p>
+            <iframe src="./plots/runs-per-innings-and-strike-rate-animation-home.html" 
+                scrolling="no" 
+                style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:800px;width:1000px"></iframe>
+            <iframe src="./plots/runs-per-innings-and-strike-rate-animation-away.html" 
+                scrolling="no" 
+                style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:800px;width:1000px"></iframe>
+                    
             <p>
-                The main trend 
+                While seeming messy at first, the main trend observed in both of 
+                these is the initially low strike rate
+                and runs per innings of the geometric median both at home and away. This
+                results in a small grouping at the bottom left. Immediately after this
+                initial period, both the runs per innings and the strike rate increase
+                rapidly, creating another grouping for geometric medians around the years
+                2000-2009. Finally, the geometric median becomes far more sporadic from year
+                to year, generally employing a decreasing trend until it recedes back to
+                pre-2000 levels.
+                <br/><br/>
+                All of this suggests that during the period of Australia's dominance
+                batsmen were scoring more runs and at a faster rate than the period
+                prior to 2000 and the period post 2010. This suggests that Australia
+                would post higher totals and as a result be able to win more games.
+                <br/><br/>
+                However, this visualisation does not take into account the number
+                of players actually scoring 200 runs in a year. From the visual insepction
+                of the bubble chart above, it appears that there is a decrease in
+                the number of players scoring above 200 runs and of the players that
+                score above 200 runs it appears that they score fewer runs in total.
+                Since this trend is not exactly easily identifiable from the bubble chart
+                it was decided that further analysis could be conducted in this area.
+                <br/><br/>
+                As well as what is stated above, the final metrics of a batting team's 
+                quality is that of the number of Balls Faced. That is, the total number 
+                of balls a team is able to
+                play until they are "All Out". Since an Innings is only over when the 
+                batting team is "All Out", the ability to face more balls could be the
+                difference between acquiring a draw or losing the game.
+                <br/><br/>
+                As well as this, a high amount of balls faced but a low amount of runs
+                scored is largely indicative of highly defensive batting that teams
+                often employ when they believe they have no change of winning. This is
+                especially prevalent in overseas conditions where batsmen may not be comfortable
+                with the conditions. As such, the below visualisation was created to investigate
+                whether this was the case with the Australian team.
             </p>
             </div>
             <div class="less-centred-content">
@@ -156,14 +338,30 @@
             </table>
             </div>
     <div class="centred-content">
-        <h4>2.4 Analysing Bowling</h4>
+        <p>
+            Both of these visualisations show the relationship between the
+            number of balls faced and the number of runs scored. In general,
+            for both Home and Away games the more balls that a player faces, the
+            more runs they score in a year. Reading further into each of these
+            visualisations, it becomes clear that fewer players are facing
+            more than 300 balls and scoring more than 300 runs in a year both
+            in home matches and away matches over the 2010s than there were in
+            the early-mid 2000s. In fact, it becomes clear that the percentage
+            of players that score over 300 runs over a year in the 2010s
+            is around the same as it was in the 90s. This has occured while the
+            number of balls faced has also decreased. Both of these in combination
+            can result in fewer games being drawn and more being outright lost.
+            <br/><br/>
+            Another 
+        </p>
+        <h3>2.3 Analysing Bowling</h3>
         <p>
             In order to analyse the bowling performances of the Australian team
             first, various derived columns were created. This includes columns of 
             data such as runs, wickets and balls per innings and in total over a 
             player's career for both home and away conditions. This resulted in 
             16 columns of data, which would be extremely unwieldy for a unsupervised 
-            learning algorithm such as k-means or gaussian mixture. As such,
+            learning algorithm such as k-means or a gaussian mixture model. As such,
             a Principle Component Analysis was applied to reduce the number of
             columns within the data while covering close to all of the variance
             in the data. The results of the PCA can be seen below.
@@ -197,17 +395,71 @@
         style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:800px;width:1000px"></iframe>
         <p>
             This once again suggests an interesting trend: the percentage of balls bowled 
-            by Class 6 bowlers has decreased over time. There are only 3 bowlers in this
-            class, specifically "GD McGrath", "SK Warne" and "NM Lyon".
-
-            As well as this, it can also be seen that there was a dip in Class 3
-            bowlers between the years of 1998 and 2008, which are surrounded by large
-            peaks on either side.
-
+            by Class 5 bowlers has decreased over time. There are only 2 bowlers in this
+            class, specifically "GD McGrath" and "SK Warne".            
+            <br/><br/>
+            As well as this, it can also be seen that there was a dip in Class 8
+            and Class 4 bowlers between the years of 1998 and 2008, which are surrounded by large
+            peaks on either side. 
+            <br/><br/>
             Both of these trends should be interesting to explore in more depth
-            by analysing the records of specific players to see how their bowling
-            or lack thereof contributed to the demise of Australian cricket.
+            by analysing the records of specific Class 0, 5 and 8 players to see 
+            how their bowling or lack thereof contributed to the demise of Australian
+            cricket. However, due to time constraints this was not possible for this
+            report and instead each bowler's "Average" was compared to the "Balls per Innings"
+            they bowl and their class. This gives a fairly good representation of the qualities
+            of each class and allows for analysis in that regard.
         </p>
+        <iframe src="./plots/balls-per-innings-vs-average-gmm.html" 
+        scrolling="no" 
+        style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:800px;width:1000px"></iframe>
+        <div class="less-less-centred-content">
+            <table>
+                <tr>
+                    <td><iframe src="./plots/balls-per-innings-vs-average-gmm-home.html" 
+                        scrolling="no" 
+                        style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:400px;width:600px"></iframe>
+                    </td>
+                    <td><iframe src="./plots/balls-per-innings-vs-average-gmm-away.html" 
+                        scrolling="no" 
+                        style="overflow:hidden;border:none;display:block;margin:auto;text-align:center;height:400px;width:600px"></iframe>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        <p>
+            Using a more qualitative approach, it can be seen that Class 5 consists
+            of "star" bowlers or those that have the best home and away record that
+            are also heavily relied upon. Hence, the retirement of both Shane Warne
+            and Glenn McGrath in 2007 was a massive event and is likely a very large
+            aspect of the decline of the Australian Cricket Team after this point in
+            time.
+            <br/><br/>
+            Using the above visualisation it can be seen that Class 4 bowlers represent
+            less-used bowlers that perform quite well in away matches while being mediocre
+            in home matches such as "SPD Smith" and "AR Border". 
+            These bowlers would thus only be used in cases where front-line main 
+            bowlers are unable to take wickets. Thus, with the existence of Class 5
+            bowlers this would be unnecessary to do.
+            <br/><br/>
+            Class 8 can be seen to be similar to Class 4, however these bowlers
+            are more consisten than Class 4 bowlers in that they perform similarly
+            in both home and away conditions. These bowlers would again only
+            be used in cases where the front-line main bowlers are unable to take wickets
+            and as such with existence of Class 5 bowlers they are not needed.
+            <br/><br/>
+            Most bowlers in Class 4 and 8 are in fact not even bowlers, instead
+            primarily playing as batsmen in the team, meaning that their use is
+            essentially a last ditch effort by the captain to take wickets in order
+            to stop the opposition from scoring.
+        </p>
+        <h2>4.0 Discussion</h2>
+        <p>
+            The main limitations of this report are related to the data, methods
+            and visualisation used. While some of the relationships shown have a direct
+            impact on
+        </p>
+        <h2>5.0 Conclusion</h2>
     </div>        
     </body>
 </html>
