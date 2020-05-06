@@ -1,4 +1,5 @@
 .centred-content {
+    display: block;
     margin-left: auto;
     margin-right: auto;
     width: 1200px;
@@ -17,6 +18,10 @@
     margin-right: auto;
     width: 2000px;
     text-align: justify;
+}
+
+.center {
+    text-align:center;
 }
 
 p, h1, h2, h3, h4, h5, ol, ul {
